@@ -77,15 +77,12 @@ namespace ASM_CSHARP_2
         private static List<Player> GetPlayerFormFile()
         {
             string[] text = File.ReadAllLines("players.txt");
-            List<Player> list = new List<Player> { };
-            for (int i = 0; i < text.Length; i++)
+            List<Player> list = text.Select(x =>
             {
-                string[] text1 = text[i].Split('\t');
+                string[] text1 = x.Split('\t');
                 Player player = new Player(text1[0], text1[1], int.Parse(text1[2]));
-                if (player == null)
-                    continue;
-                list.Add(player);
-            }
+                return player;
+            }).ToList();
             return list.OrderByDescending(x => x.score).ToList();
         }
 
